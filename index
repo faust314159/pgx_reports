@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document Viewer</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        #file-list {
+            list-style-type: none;
+        }
+        #file-list li {
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>Document Viewer</h1>
+    <ul id="file-list"></ul>
+    <div id="content"></div>
+
+    <script>
+        const docs = [
+            // List your documents here
+            'reports/test.md',
+        ];
+
+        const fileList = document.getElementById('file-list');
+        const content = document.getElementById('content');
+
+        docs.forEach(doc => {
+            const li = document.createElement('li');
+            const a = document.createElement('a');
+            a.href = '#';
+            a.textContent = doc.split('/').pop();
+            a.onclick = () => {
+                fetch(doc)
+                    .then(response => response.text())
+                    .then(text => {
+                        content.innerHTML = `<pre>${text}</pre>`;
+                    });
+                return false;
+            };
+            li.appendChild(a);
+            fileList.appendChild(li);
+        });
+    </script>
+</body>
+</html>
